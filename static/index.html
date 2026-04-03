@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lock_In Dieting AI</title>
+  <style>
+    :root {
+      --bg: #f6f1e7;
+      --panel: #fffaf2;
+      --panel-strong: #fff;
+      --ink: #1f2a1f;
+      --muted: #5f6f5d;
+      --accent: #c96f3b;
+      --accent-dark: #8a4c28;
+      --border: #decfb7;
+      --success: #2f6b46;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fff5dc 0%, transparent 28%),
+        linear-gradient(135deg, #f5e4c2 0%, var(--bg) 45%, #ece5d8 100%);
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(90, 70, 35, 0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.05;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      letter-spacing: -0.05em;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 300px;
+    }
+
+    .hero-card {
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      background: #f3ebde;
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.4rem;
+      color: var(--accent-dark);
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    input, select, textarea, button {
+      font: inherit;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fffdf8;
+      padding: 12px 14px;
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: white;
+      padding: 14px 20px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .output {
+      min-height: 280px;
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .meal {
+      padding: 14px 0;
+      border-top: 1px solid #eadfcf;
+    }
+
+    .meal:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #efe3d3;
+      color: var(--accent-dark);
+      font-size: 0.85rem;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: var(--success);
+      min-height: 1.2em;
+    }
+
+    @media (max-width: 880px) {
+      .shell,
+      .grid,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="panel hero">
+      <div>
+        <p>Dieting AI Prototype</p>
+        <h1>Lock in a meal plan you can actually follow.</h1>
+        <p>
+          This starter app turns a few profile details into a daily calorie target,
+          macro split, hydration goal, and meal suggestions.
+        </p>
+      </div>
+
+      <div class="hero-card">
+        <h2>What this prototype does</h2>
+        <div class="metrics">
+          <div class="metric">
+            <strong>1</strong>
+            Profiles your goal
+          </div>
+          <div class="metric">
+            <strong>2</strong>
+            Generates a diet plan
+          </div>
+          <div class="metric">
+            <strong>3</strong>
+            Preps for LLM upgrades
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Create your test plan</h2>
+      <form id="plan-form">
+        <div class="grid">
+          <label>
+            Name
+            <input name="name" value="Ryan" required />
+          </label>
+          <label>
+            Age
+            <input name="age" type="number" value="21" min="1" required />
+          </label>
+          <label>
+            Height (cm)
+            <input name="height_cm" type="number" value="178" min="1" required />
+          </label>
+          <label>
+            Weight (kg)
+            <input name="weight_kg" type="number" value="84" min="1" required />
+          </label>
+          <label>
+            Activity level
+            <select name="activity_level">
+              <option value="sedentary">Sedentary</option>
+              <option value="light">Light</option>
+              <option value="moderate" selected>Moderate</option>
+              <option value="active">Active</option>
+            </select>
+          </label>
+          <label>
+            Goal
+            <select name="goal">
+              <option value="fat_loss" selected>Fat loss</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="muscle_gain">Muscle gain</option>
+            </select>
+          </label>
+          <label>
+            Diet style
+            <input name="diet_style" value="high_protein" />
+          </label>
+          <label>
+            Meals per day
+            <select name="meals_per_day">
+              <option value="3">3</option>
+              <option value="4" selected>4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Allergies (comma separated)
+          <input name="allergies" placeholder="peanuts, shellfish" />
+        </label>
+
+        <label>
+          Dislikes (comma separated)
+          <input name="dislikes" placeholder="tuna, mushrooms" />
+        </label>
+
+        <button type="submit">Generate Meal Plan</button>
+        <div class="status" id="status"></div>
+      </form>
+
+      <div class="output" id="output">Submit the form to generate a meal plan.</div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("plan-form");
+    const output = document.getElementById("output");
+    const status = document.getElementById("status");
+
+    function parseList(value) {
+      return value
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+
+    function renderPlan(data) {
+      const plan = data.plan;
+      const header = [
+        `<span class="badge">${plan.daily_calories} kcal/day</span>`,
+        `<span class="badge">${plan.protein_target_g}g protein</span>`,
+        `<span class="badge">${plan.carbs_target_g}g carbs</span>`,
+        `<span class="badge">${plan.fats_target_g}g fats</span>`,
+        `<span class="badge">${plan.hydration_goal_liters}L water</span>`
+      ].join("");
+
+      const meals = plan.meals
+        .map((meal, index) => `
+          <div class="meal">
+            <h3>Meal ${index + 1}: ${meal.name}</h3>
+            <p>${meal.calories} kcal | ${meal.protein_g}g protein | ${meal.carbs_g}g carbs | ${meal.fats_g}g fats</p>
+            <p>${meal.notes}</p>
+          </div>
+        `)
+        .join("");
+
+      output.innerHTML = `
+        <h2>${data.profile.name}'s Plan</h2>
+        <p>${plan.rationale}</p>
+        <div>${header}</div>
+        ${meals}
+      `;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "Building your plan...";
+
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get("name"),
+        age: Number(formData.get("age")),
+        height_cm: Number(formData.get("height_cm")),
+        weight_kg: Number(formData.get("weight_kg")),
+        activity_level: formData.get("activity_level"),
+        goal: formData.get("goal"),
+        diet_style: formData.get("diet_style"),
+        meals_per_day: Number(formData.get("meals_per_day")),
+        allergies: parseList(formData.get("allergies")),
+        dislikes: parseList(formData.get("dislikes"))
+      };
+
+      try {
+        const response = await fetch("/api/plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Unable to generate plan.");
+        }
+
+        renderPlan(data);
+        status.textContent = "Plan generated.";
+      } catch (error) {
+        output.textContent = error.message;
+        status.textContent = "";
+      }
+    });
+  </script>
+</body>
+</html>
