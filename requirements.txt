@@ -1,0 +1,2 @@
+# No third-party Python packages are required for this starter app.
+# Render can install from this file during build, and the app runs with the standard library.

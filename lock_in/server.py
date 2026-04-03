@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -9,8 +10,8 @@ from lock_in.models import UserProfile
 from lock_in.planner import generate_meal_plan
 
 
-HOST = "127.0.0.1"
-PORT = 8000
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", "8000"))
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 
 
